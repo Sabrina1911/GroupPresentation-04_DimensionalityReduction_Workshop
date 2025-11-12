@@ -1,85 +1,98 @@
-# Dimensionality Reduction Workshop
+#  Problem Analysis Workshop 4  
 
-## Project Overview
-This project analyzes World Bank Consumer Price Index (CPI) data (2017-2024) for Canada and global regions, focusing on dimensionality reduction techniques for inflation analysis. The project demonstrates systematic preprocessing, feature selection, and dimensionality reduction methods through an object-oriented programming approach.
+**Notebook:** `DR_Workshop_04.ipynb`  
+**Author:** Sabrina Ronnie George Karippatt
+**Date:** 11 November 2025  
 
-## Contributors
-- Jatinder Pal Singh (9083762) - Missing Values Ratio + Low Variance Filter
-- Andrew Silveira (5077086) - High Correlation Filter + PCA
-- Rohit Krishnamurthy (8993045) - Random Forest Importance + Forward Selection
-- Sabrina Ronnie George Karippatt (8991911) - Backward Selection + Transformations (Box–Cox & Tukey)
+---
 
-## Data Sources
-- World Bank CPI Dataset (2017-2024)
-- Location: `data/API_FP.CPI.TOTL.ZG_DS2_en_csv_v2_23195.csv`
+##  Objective
 
-## Hypothesis
-**Null Hypothesis (H₀):** Changes in the Consumer Price Index (CPI) show no statistically significant trend, pattern, or structural shift during 2017-2024.
+This workshop builds upon the previous *Dimensionality Reduction Workshop* by shifting the focus from **variance analysis** to **data transformation and readiness**.  
+The goal was to make the dataset statistically consistent and model-ready by applying five key transformations required in **Unit 6**.
 
-**Alternative Hypothesis (H₁):** The CPI series exhibits a significant temporal or structural pattern, indicating measurable inflationary pressure or trend behavior.
+---
 
-## Key Features
+##  Dataset
 
-### 1. Data Preprocessing
-- Missing Values Filter (threshold: 0.4)
-- Low Variance Filter (threshold: 0.01)
-- High Correlation Filter (cutoff: 0.90)
+- **Source:** World Bank API — Consumer Price Index (CPI) dataset  
+  *File:* `API_FP.CPI.TOTL.ZG_DS2_en_csv_v2_23195.csv`  
+- **Scope:** Annual CPI growth rates for Canada (1960–2024)  
+- **Purpose:** To analyze inflation trends and prepare data for dimensionality reduction techniques such as PCA.
 
-### 2. Feature Selection & Dimensionality Reduction
-- Principal Component Analysis (PCA)
-- Random Forest Feature Importance
-- Sequential Feature Selection (Forward and Backward)
+---
 
-### 3. Data Transformations
-- Box-Cox Transformation for strictly positive features
-- Tukey's Ladder (signed power transform) for features with zeros/negatives
+##  Workflow Summary
 
-## Technical Implementation
-- Object-Oriented Programming approach
-- Python libraries: NumPy, Pandas, Matplotlib, SciPy, scikit-learn
-- Custom utility classes for data processing and analysis
+The notebook performs the following major steps:
 
-## Project Structure
-```
-GroupPresentation_4/
-├── data/
-│   └── API_FP.CPI.TOTL.ZG_DS2_en_csv_v2_23195.csv
-├── notebooks/
-│   └── DimensionalityReduction_Workshop.ipynb
-└── README.md
-```
+1. **Environment Setup & Verification**  
+   - Displays Python, OS, and library versions.  
+   - Uses relative paths for reproducibility.
 
-## Requirements
-The project requires the following Python packages:
-- numpy
-- pandas
-- matplotlib
-- scipy
-- scikit-learn
+2. **Data Loading & Inspection**  
+   - Reads the CPI dataset (`.csv`) and converts it into a tidy long format.  
+   - Focuses on Canadian CPI data and validates date ranges and completeness.
 
-## Usage
-1. Load and preprocess the CPI dataset using the `DataIngest` class
-2. Apply feature filtering using the preprocessing utilities
-3. Analyze correlations through visualization
-4. Perform dimensionality reduction using PCA
-5. Extract feature importance using Random Forest
-6. Apply sequential feature selection
-7. Transform features using Box-Cox and Tukey methods
+3. **Data Transformations**  
+   The following transformations were applied sequentially:
+   -  *Converting factor variables to numeric*  
+   -  *Converting calendar dates to Julian & Ordinal values*  
+   -  *Encoding categorical variables to dummies*  
+   -  *Performing Box–Cox transformations* for positive numeric features  
+   -  *Applying Tukey’s Ladder (p = 0.5)* to handle remaining skewed values  
 
-## Analysis Workflow
-1. Data Ingestion and Cleaning
-2. Feature Preprocessing and Filtering
-3. Correlation Analysis
-4. Principal Component Analysis
-5. Feature Importance Ranking
-6. Sequential Feature Selection
-7. Distribution Transformation and Normalization
+4. **Validation & Visualization**  
+   - Numerical and visual validation of skewness reduction.  
+   - Histogram comparison before and after **Box–Cox transformation** confirms normalization.  
 
-## Results
-The analysis provides insights into:
-- Feature correlations in CPI data
-- Principal components explaining variance
-- Most important features through Random Forest
-- Optimal feature subsets through sequential selection
-- Normalized feature distributions after transformations
+5. **Export & Reproducibility**  
+   - Saves processed output as  
+     `data/processed/API_FP.CPI.TOTL.ZG_DS2_en_csv_v2_23195_transformed.csv`  
+   - Generates `requirements.txt` using `pip freeze` for full reproducibility.
 
+---
+
+##  Results
+
+- Skewness in the main variable (`Value`) reduced from **1.37 → 0.01** after Box–Cox transformation.  
+- Transformed dataset now exhibits **stable variance and near-normal distribution**.  
+- All five required transformations completed successfully with proper markdown documentation.  
+- Histogram validation demonstrates visible improvement in distribution symmetry.
+
+---
+
+##  Techniques Covered
+
+- **Principal Component Analysis (PCA)** – linear dimensionality reduction (from previous workshop)  
+- **Feature Selection / Factor Analysis** – identifying influential predictors  
+- **Box–Cox & Tukey’s Ladder** – variance stabilization and normalization  
+
+These techniques align with **Unit 6 learning outcomes** on preparing, transforming, and validating data for dimensionality reduction.
+
+---
+
+##  Deliverables
+
+| File | Description |
+|------|--------------|
+| `notebooks/DR_Workshop_04.ipynb` | Main analysis notebook with transformations, plots, and summary |
+| `data/API_FP.CPI.TOTL.ZG_DS2_en_csv_v2_23195.csv` | Original CPI dataset |
+| `data/processed/API_FP.CPI.TOTL.ZG_DS2_en_csv_v2_23195_transformed.csv` | Processed output dataset |
+| `requirements.txt` | Environment dependency list |
+| `README.md` | Project summary and reproducibility documentation |
+
+---
+
+##  Conclusion
+
+This workshop successfully bridges the gap between **dimensionality reduction** and **data readiness**.  
+The CPI dataset has been fully transformed, validated, and exported for downstream analytical tasks, ensuring that future PCA or feature selection analyses are statistically valid and reproducible.
+
+---
+
+##  References
+
+- World Bank Open Data — [https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG](https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG)  
+- Course Material — Unit 6, *Dimensionality Reduction & Data Transformation*, PROG8431  
+- Conestoga College Applied AI & Machine Learning Curriculum  
